@@ -12,7 +12,7 @@ Most of orginal code is from https://github.com/rentalcustard/guardianpuz. This 
 
 ## Installation
 1. Make sure the requirements listed above are fulfilled.
-2. Clone this repo, or download it as a zip file. 
+2. Clone or download this repo. See the green 'Clone or Download' button above.
 3. Run the cloned/downloaded `guardianpuz.py` file as per usage instructions below. 
 
 
