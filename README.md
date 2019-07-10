@@ -6,7 +6,7 @@ Given a [Guardian](https://www.guardian.co.uk/crosswords) crossword type and num
 * Python 3
 * [puzpy](https://github.com/alexdej/puzpy) - `pip install puzpy`
 * [beautiful soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) - `pip install bs4`
-* [numpy] - `pip install numpy`
+* numpy - `pip install numpy`
 
 ## Installation
 1. Make sure the requirements listed above are fulfilled.
