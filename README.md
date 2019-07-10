@@ -2,6 +2,8 @@
 
 Given a [Guardian](https://www.guardian.co.uk/crosswords) crossword type and number (or just a type), this app downloads a puz file that can be imported into crossword apps like AlphaCross. 
 
+Most of orginal code is from https://github.com/rentalcustard/guardianpuz. This repo simply updates it for Python 3 + makes a few refactorings. 
+
 ## Requirements
 * Python 3
 * [puzpy](https://github.com/alexdej/puzpy) - `pip install puzpy`
