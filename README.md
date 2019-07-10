@@ -1,6 +1,6 @@
 # GuardianPuz
 
-Given a [Guardian](https://www.guardian.co.uk/crosswords) crossword type and number (or just a type), this app downloads a puz file that can be imported into crossword apps like AlphaCross. 
+Given a [Guardian](https://www.guardian.co.uk/crosswords) crossword type and number (or just a type), this app downloads a puz file that can be imported into crossword apps like AlphaCross or AcrossLite. 
 
 Most of orginal code is from https://github.com/rentalcustard/guardianpuz. This repo simply updates it for Python 3 + makes a few refactorings. 
 
