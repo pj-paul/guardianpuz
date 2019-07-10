@@ -40,9 +40,10 @@ This creates a file named `Guardian TYPE Crossword No NUMBER.puz` with your cros
 [Across Lite](https://www.litsoft.com/across/alite/download/index.html)
 
 ## Example screenshot
-
+** Cursewords **
 ![cursewords running with a file created by GuardianPuz](doc/example.png)
 
+** Across Lite**
 ![Across Lite running with a file created by GuardianPuz](doc/eg_across_lite.png)
 
 ## Known bugs 
