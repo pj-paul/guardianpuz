@@ -59,11 +59,11 @@ def fill_blanks(blank_matrix, position_vector, clue_direction, clue_length):
 
 	'''
 	Function to identify the blank elements of a 15 * 15 crossword grid. 
-	Takes in two arguments:
-	1. position_vector: The starting position from which a clue is being filled. Should be of the form [x,y] where x and y are integers
-	2. fill_vector: A vector indicating the length and direction of the clue being filled. 
-			Should be of the form [x,0] or [y,0] because clues can only be one of across (meaning movement along y axis is 0)
-			or down (meaning movement along x axis is 0).
+	Takes in four arguments:
+	1. blank_matrix: A 15*15 numpy matrix to indicate blank values
+	2. position_vector: The starting position from which a clue is being filled. Should be of the form [x,y] where x and y are integers
+	3. clue_direction: Down or Across
+	4. clue_length: How many cells of the matrix does the answer to the clue fill. 
 	'''
 
 	def check_position_vector(position_vector):
