@@ -1,55 +1,42 @@
 # -*- coding: utf-8 -*-
+
+# Code in Python 3
 import puz
+import requests 
+import numpy as np
 from bs4 import BeautifulSoup
-import urllib2
 import sys
 import argparse
+import json
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-t', '--type')
 parser.add_argument('number')
 
+# Parse script arguments to extract crossword type and number 
 args = parser.parse_args()
-
 crossword_number = args.number
 if args.type is None:
     crossword_type = 'cryptic'
 else:
     crossword_type = args.type
+crossword_url = "https://www.theguardian.com/crosswords/" + crossword_type + "/" + crossword_number
+
+# Extract and load the json crossword data provided by Gurdian. 
+res = requests.get(crossword_url)
+soup = BeautifulSoup(res.text)
+d = soup.findAll('div', {'class':'js-crossword'})[0]['data-crossword-data']
+json_data = json.loads(d)
 
 
-accessible_url = "https://www.theguardian.com/crosswords/accessible/" + crossword_type + "/" + crossword_number
-standard_url = "https://www.theguardian.com/crosswords/" + crossword_type + "/" + crossword_number
-
-page = urllib2.urlopen(accessible_url).read()
-soup = BeautifulSoup(page, features='html.parser')
-clue_page = urllib2.urlopen(standard_url).read()
-
-clue_soup = BeautifulSoup(clue_page, features='html.parser')
+# Initialize a puz object. Fill in some metadata on the puzzle
 p = puz.Puzzle()
 p.height = 15
 p.width = 15
-p.title = "Guardian " + crossword_type.title() + " Crossword No " + crossword_number
-p.author = clue_soup.find(attrs={"itemprop": "author"}).find(attrs={"itemprop": "name"}).get_text()
-clues = []
+p.title = "Guardian " + crossword_type.title() + json_data['name']
+p.author = json_data['name']
 
-letter_to_number = {
-            "A": 1,
-            "B": 2,
-            "C": 3,
-            "D": 4,
-            "E": 5,
-            "F": 6,
-            "G": 7,
-            "H": 8,
-            "I": 9,
-            "J": 10,
-            "K": 11,
-            "L": 12,
-            "M": 13,
-            "N": 14,
-            "O": 15
-        }
+
 
 class Clue:
     def __init__(self, number, direction, text):
@@ -66,44 +53,60 @@ class Clue:
         else:
             return self.number < other.number
 
+# Helper function to create the crossword blank position list 
+
+def fill_blanks(blank_matrix, position_vector, clue_direction, clue_length):
+
+	'''
+	Function to identify the blank elements of a 15 * 15 crossword grid. 
+	Takes in two arguments:
+	1. position_vector: The starting position from which a clue is being filled. Should be of the form [x,y] where x and y are integers
+	2. fill_vector: A vector indicating the length and direction of the clue being filled. 
+			Should be of the form [x,0] or [y,0] because clues can only be one of across (meaning movement along y axis is 0)
+			or down (meaning movement along x axis is 0).
+	'''
+
+	def check_position_vector(position_vector):
+		pass # To be implemented
+
+	if clue_direction == "A":
+		begin_index = position_vector['x']
+		end_index = position_vector['x'] + clue_length
+		row_index = position_vector['y']
+		blank_matrix[row_index,begin_index:end_index] = 1
+	else:
+		begin_index = position_vector['y']
+		end_index = position_vector['y'] + clue_length
+		col_index = position_vector['x']
+		blank_matrix[begin_index:end_index, col_index] = 1
+		
+	
+
 clues = []
-for clue in clue_soup.find(attrs={"class": "crossword__clues--across"}).find_all(attrs={"class": "crossword__clue"}):
-    #get clue number and text, need to do this for all across
-    # then we need to build a list which is e.g. 1A - 1D - 2A - 3A - 4D - 5A
-    clue_direction = "A"
-    clue_text = clue.find(attrs={"class": "crossword__clue__text"}).get_text()
-    clue_number_spec = clue.find(attrs={"class": "crossword__clue__number"}).get_text()
-    if "," in clue_number_spec:
-        clue_number = int(clue_number_spec.split(", ")[0])
-    else:
-        clue_number = int(clue_number_spec)
-        
-    clues.append(Clue(clue_number, clue_direction, clue_text))
+blank_matrix = np.zeros([15,15],dtype=int)
 
+for clue in json_data['entries']:
+	clue_number = clue['number']
+	clue_direction = "D" if clue['direction'] == "down" else "A"
+	clue_length = clue['length']
+	clue_text = clue['clue']
+	clues.append(Clue(clue_number, clue_direction, clue_text))
 
-for clue in clue_soup.find(attrs={"class": "crossword__clues--down"}).find_all(attrs={"class": "crossword__clue"}):
-    #get clue number and text, need to do this for all across
-    # then we need to build a list which is e.g. 1A - 1D - 2A - 3A - 4D - 5A
-    clue_direction = "D"
-    clue_text = clue.find(attrs={"class": "crossword__clue__text"}).get_text()
-    clue_number_spec = clue.find(attrs={"class": "crossword__clue__number"}).get_text()
-    if "," in clue_number_spec:
-        clue_number = int(clue_number_spec.split(", ")[0])
-    else:
-        clue_number = int(clue_number_spec)
+	# Edit the blanks matrix 
+	position_vector = clue['position']
+	#print(clue['position'],clue_direction, clue_length)
+	fill_blanks(blank_matrix, position_vector,clue_direction, clue_length )
+	#print(blank_matrix)
 
-    clues.append(Clue(clue_number, clue_direction, clue_text))
-
-sorted_clue_texts = map(lambda c: c.text, sorted(clues))
-
-fill = []
-for row in soup.find_all(attrs={"class": "crossword__accessible-row-data"}):
-    row_text = ["-"] * 15
-    for gap in row.get_text().split(": ")[1].split(" "):
-        row_text[letter_to_number[gap] - 1] = "."
-    fill.append(''.join(row_text))
+blank_matrix = blank_matrix.flatten().tolist()
+blank_matrix = list(map(str, blank_matrix))
+fill = [cell.replace('1', '-').replace('0', '.') for cell in blank_matrix] 
+#print(fill)
 
 fill = ''.join(fill)
+#print(fill)
+sorted_clue_texts = list(map(lambda c: c.text, sorted(clues)))
+#print(sorted_clue_texts)
 
 p.fill = fill
 p.clues = sorted_clue_texts
