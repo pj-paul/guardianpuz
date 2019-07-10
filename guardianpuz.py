@@ -56,7 +56,7 @@ class Clue:
     def __init__(self, number, direction, text):
         self.number = number
         self.direction = direction
-        self.text = text #Removing the encoding as per Peter's suggestion
+        self.text = text # Removing the encoding as per Peter's suggestion
 
     def __lt__(self, other):
         if self.number == other.number:
@@ -68,11 +68,11 @@ class Clue:
             return self.number < other.number
 
 clues = []
-solution_matrix = np.array(['.']*225, dtype=object).reshape([15,15]) #Create a 15*15 grid populated with '.'s.
+solution_matrix = np.array(['.']*225, dtype=object).reshape([15,15]) # Create a 15*15 grid populated with '.'s.
 
 for clue in json_data['entries']:
 
-	#Generate parameters for 'Clue' class instances and fill_grid function calls. 
+	# Generate parameters for 'Clue' class instances and fill_grid function calls. 
 	clue_number = clue['number']
 	clue_direction = "D" if clue['direction'] == "down" else "A"
 	clue_length = clue['length']
@@ -89,7 +89,7 @@ for clue in json_data['entries']:
 # Generate the solution string, and the blanks-fill string to pass through to puz
 solution_matrix = solution_matrix.flatten().tolist() # Flatten the solution matrix into a single row, and then covert into a list. 
 solution_string = ''.join(solution_matrix) # Turn the solution_matrix list into one single string. 
-										# This string will has filled in solutions + period for blanks. 
+										# This string will have filled in solutions + period for blanks. 
 fill_string = re.sub(r'[A-Za-z]','-',solution_string)  #Substitute alphabets with - (hypehn), and leave the periods alone. 
 
 sorted_clue_texts = list(map(lambda c: c.text, sorted(clues)))
