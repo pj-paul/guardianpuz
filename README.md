@@ -37,9 +37,13 @@ This creates a file named `Guardian TYPE Crossword No NUMBER.puz` with your cros
 
 [alphacross (Android)](https://play.google.com/store/apps/details?id=org.akop.crosswords&hl=en)
 
+[Across Lite](https://www.litsoft.com/across/alite/download/index.html)
+
 ## Example screenshot
 
 ![cursewords running with a file created by GuardianPuz](doc/example.png)
+
+![Across Lite running with a file created by GuardianPuz](doc/eg_across_lite.png)
 
 ## Known bugs 
 * Encoding related troubles. 
