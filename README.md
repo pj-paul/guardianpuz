@@ -16,7 +16,7 @@ Given a [Guardian](https://www.guardian.co.uk/crosswords) crossword type and num
 
 ## Usage
 
-`python guardianpuz.py  --type=TYPE --number = XXXX`
+`python guardianpuz.py  --type=TYPE --number=XXXX`
 
 NUMBER is the number of the crossword you want to load, for example 27763. You can find it in the URL, e.g. https://www.theguardian.com/crosswords/cryptic/27763.
 
