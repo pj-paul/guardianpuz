@@ -50,6 +50,21 @@ This creates a file named `Guardian TYPE Crossword No NUMBER.puz` with your cros
 
 ## Known bugs 
 * Encoding related troubles. 
+>
+eg: Running python guardianpuz.py -t quick -n 15342 returns the following error:
+
+Traceback (most recent call last):
+File "guardianpuz.py", line 102, in 
+p.save(save_file_name)
+File "/Users/paulpj/.local/lib/python3.7/site-packages/puz.py", line 225, in save
+puzzle_bytes = self.tobytes()
+File "/Users/paulpj/.local/lib/python3.7/site-packages/puz.py", line 240, in tobytes
+self.global_cksum(), ACROSSDOWN.encode(ENCODING),
+File "/Users/paulpj/.local/lib/python3.7/site-packages/puz.py", line 366, in global_cksum
+cksum = self.text_cksum(cksum)
+File "/Users/paulpj/.local/lib/python3.7/site-packages/puz.py", line 354, in text_cksum
+cksum = data_cksum(clue.encode(ENCODING), cksum)
+UnicodeEncodeError: 'latin-1' codec can't encode character '\u2014' in position 16: ordinal not in range(256)
 
 ## ToDos
 * Be distributed via pip
