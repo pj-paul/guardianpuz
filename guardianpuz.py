@@ -30,7 +30,7 @@ else:
 # Set crossword number
 if args.number is None:
 	crossword_number = helpers.get_latest_number(crossword_type)
-	print("Crossword number not provided. Fetching latest Cryptic crossword.")
+	print("Crossword number not provided. Fetching latest %s crossword # %s." %(crossword_type, crossword_number))
 else:
     crossword_number = args.number
 
@@ -90,7 +90,7 @@ for clue in json_data['entries']:
 solution_matrix = solution_matrix.flatten().tolist() # Flatten the solution matrix into a single row, and then covert into a list. 
 solution_string = ''.join(solution_matrix) # Turn the solution_matrix list into one single string. 
 										# This string will have filled in solutions + period for blanks. 
-fill_string = re.sub(r'[A-Za-z]','-',solution_string)  #Substitute alphabets with - (hypehn), and leave the periods alone. 
+fill_string = re.sub(r'[A-Za-z]','-',solution_string)  #Substitute alphabets with - (hyphen), and leave the periods alone. 
 
 sorted_clue_texts = list(map(lambda c: c.text, sorted(clues)))
 
