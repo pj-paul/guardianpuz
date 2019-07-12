@@ -23,7 +23,7 @@ Most of orginal code is from https://github.com/rentalcustard/guardianpuz. This 
 `cd` into the location where the project directory was downloaded. So, if the files were downloaded into ~/Documents, in your terminal run the command
 `cd ~/Documents/guardianpuz` to enter the project directory. 
 
-Then invoke the main guardian function as per instructions below. 
+Then invoke the main `guardianpuz` function like below: 
 
 `python guardianpuz.py  --type=TYPE --number=XXXX`
 
@@ -31,7 +31,7 @@ NUMBER is the number of the crossword you want to load, for example 27763. You c
 
 TYPE is one of quick, cryptic, weekend, quiptic, speedy, and everyman. Prize, Genius, and Azed are currently not covered. 
 
-This creates a file named `Guardian TYPE Crossword No NUMBER.puz` with your crossword. The file will be saved in the directory from which you execute the script. 
+Running this command outputs a file named `Guardian TYPE Crossword No NUMBER.puz` with your crossword. The file will be saved in the directory from which you execute the script. 
 
 ### Examples of usage 
 
