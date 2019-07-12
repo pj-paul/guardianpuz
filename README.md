@@ -8,7 +8,9 @@ Most of orginal code is from https://github.com/rentalcustard/guardianpuz. This 
 * Python 3
 * [puzpy](https://github.com/alexdej/puzpy) - `pip install puzpy`
 * [beautiful soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) - `pip install bs4`
-* numpy - `pip install numpy`
+* [requests](https://pypi.org/project/requests/) - `pip install requests`
+* [unidecode](https://pypi.org/project/Unidecode/) - `pip install unidecode`
+* [numpy](https://www.scipy.org/install.html) - `pip install numpy`
 
 ## Installation
 1. Make sure the requirements listed above are fulfilled.
@@ -49,7 +51,7 @@ This creates a file named `Guardian TYPE Crossword No NUMBER.puz` with your cros
 ![Across Lite running with a file created by GuardianPuz](doc/eg_across_lite.png)
 
 ## Known bugs 
-* Encoding related troubles. 
+* Encoding related troubles may pop up now and then. 
 
 ## ToDos
 * Be distributed via pip

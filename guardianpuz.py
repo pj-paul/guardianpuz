@@ -2,17 +2,24 @@
 
 # Code in Python3
 
+# Third-party modules
 import puz
-import re
 import requests 
-import numpy as np
 from bs4 import BeautifulSoup
+from unidecode import unidecode
+import numpy as np
+
+# System modules
+import re
 import sys
 import argparse
 import json
 
+# Sub-modules 
 import helpers # Import functions in the file helpers.py
 
+
+# Argument Parsing for the script 
 parser = argparse.ArgumentParser()
 parser.add_argument('-t', '--type')
 parser.add_argument('-n','--number')
@@ -41,14 +48,24 @@ res = requests.get(crossword_url)
 soup = BeautifulSoup(res.text, features="lxml")
 d = soup.findAll('div', {'class':'js-crossword'})[0]['data-crossword-data']
 json_data = json.loads(d)
+puzzle_title = "Guardian " + json_data['name']
+puzzle_author = 'No Author' # So, author takes the default value 'No Author', which gets overwritten if a creator if specified in the puzzle data. 
+try:
+    puzzle_author = json_data["creator"]['name']  # Tries to rewrite author name to the creator value if provided. 
+except KeyError: # If creator value not provided, catch the KeyError exception, and pass retaining the default value of 'No Author'. 
+    pass
+puzzle_height = json_data['dimensions']['rows']
+puzzle_width = json_data['dimensions']['cols']
+puzzle_cells = puzzle_height * puzzle_width
+
 
 
 # Initialize a puz object. Fill in some metadata on the puzzle
 p = puz.Puzzle()
-p.height = 15
-p.width = 15
-p.title = "Guardian " + crossword_type.title() + json_data['name']
-p.author = json_data['name']
+p.height = puzzle_height
+p.width = puzzle_width
+p.title = puzzle_title
+p.author = puzzle_author
 
 
 # Create a 'Clue' class to hold some attributes for each clue. 
@@ -68,7 +85,7 @@ class Clue:
             return self.number < other.number
 
 clues = []
-solution_matrix = np.array(['.']*225, dtype=object).reshape([15,15]) # Create a 15*15 grid populated with '.'s.
+solution_matrix = np.array(['.']*puzzle_cells, dtype=object).reshape([puzzle_height,puzzle_width]) # Create the puzzle grid populated with '.'s.
 
 for clue in json_data['entries']:
 
@@ -76,7 +93,7 @@ for clue in json_data['entries']:
 	clue_number = clue['number']
 	clue_direction = "D" if clue['direction'] == "down" else "A"
 	clue_length = clue['length']
-	clue_text = clue['clue']
+	clue_text = unidecode(clue['clue'])
 	position_vector = clue['position']
 	clue_solution = clue['solution']
 
@@ -90,7 +107,7 @@ for clue in json_data['entries']:
 solution_matrix = solution_matrix.flatten().tolist() # Flatten the solution matrix into a single row, and then covert into a list. 
 solution_string = ''.join(solution_matrix) # Turn the solution_matrix list into one single string. 
 										# This string will have filled in solutions + period for blanks. 
-fill_string = re.sub(r'[A-Za-z]','-',solution_string)  #Substitute alphabets with - (hyphen), and leave the periods alone. 
+fill_string = re.sub(r'[A-Za-z]','-', solution_string)  #Substitute alphabets with - (hyphen), and leave the periods alone. 
 
 sorted_clue_texts = list(map(lambda c: c.text, sorted(clues)))
 
@@ -100,3 +117,5 @@ p.clues = sorted_clue_texts
 p.solution = solution_string
 save_file_name = "Guardian " + json_data['name'] + '.puz'
 p.save(save_file_name)
+
+print("Successfully fetched %s crossword # %s." %(crossword_type, crossword_number))
