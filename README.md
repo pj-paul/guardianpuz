@@ -29,7 +29,7 @@ Then invoke the main `guardianpuz` function like below:
 
 NUMBER is the number of the crossword you want to load, for example 27763. You can find it in the URL, e.g. https://www.theguardian.com/crosswords/cryptic/27763.
 
-TYPE is one of quick, cryptic, weekend, quiptic, speedy, and everyman. Prize, Genius, and Azed are currently not covered. 
+TYPE is one of `quick`, `cryptic`, `weekend`, `quiptic`, `speedy`, and `everyman`. Prize, Genius, and Azed are currently not covered. 
 
 Running this command outputs a file named `Guardian TYPE Crossword No NUMBER.puz` with your crossword. The file will be saved in the directory from which you execute the script. 
 
