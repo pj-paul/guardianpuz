@@ -58,7 +58,7 @@ Running this command outputs a file named `Guardian TYPE Crossword No NUMBER.puz
 ## Known bugs 
 * Encoding related troubles may pop up now and then. 
 
-eg: Running python guardianpuz.py -t quick -n 15342 used to return (now fixed) the following error:
+eg: Running `python guardianpuz.py -t quick -n 15342` used to return (now fixed) the following error:
 
 >Traceback (most recent call last):
 File "guardianpuz.py", line 102, in 
