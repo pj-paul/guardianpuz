@@ -12,13 +12,18 @@ Most of orginal code is from https://github.com/rentalcustard/guardianpuz. This 
 * [unidecode](https://pypi.org/project/Unidecode/) - `pip install unidecode`
 * [numpy](https://www.scipy.org/install.html) - `pip install numpy`
 
-## Installation
+## Installation and Usage
 1. Make sure the requirements listed above are fulfilled.
 2. Clone or download this repo. See the green 'Clone or Download' button above.
-3. Run the cloned/downloaded `guardianpuz.py` file as per usage instructions below. 
+3. `cd` into cloned/downloaded directory, and invoke `guardianpuz.py` file as per usage instructions below. 
 
 
-## Usage
+### Usage
+
+`cd` into the location where the project directory was downloaded. So, if the files were downloaded into ~/Documents, in your terminal run the command
+`cd ~/Documents/guardianpuz` to enter the project directory. 
+
+Then invoke the main guardian function as per instructions below. 
 
 `python guardianpuz.py  --type=TYPE --number=XXXX`
 
